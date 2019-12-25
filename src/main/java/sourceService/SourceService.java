@@ -1,22 +1,29 @@
-import java.io.*;
+package sourceService;
+
+import bean.Weather;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
-public class Maim {
-    private static final String URI = "http://api.weatherstack.com/";
-    private static final String TYPE = "current";
-    private static final String ACCESS_KEY = "664039f5ca83d922bcd3213d9b5b514c";
-    private static final String CITY = "London";
 
-    private static final String PARAMETER =  TYPE+"?access_key="+ACCESS_KEY+"&query="+CITY;
+public interface SourceService {
+    String CITY_1 = "Moscow";
+    String CITY_2 = "Kiev";
+    String CITY_3 = "London";
+    List<String> CITIES = Arrays.asList(CITY_1, CITY_2, CITY_3);
 
-    public static void main(String[] args) {
-        executePost(URI+PARAMETER);
-    }
+    List<Weather> getAllInNextDays(int countDays);
+    Weather parseToWeatherInfo(JsonObject jsonObject);
 
-    public static String executePost(String targetURL) {
+    default JsonObject executeGet(String targetURL) {
         HttpURLConnection connection = null;
-
         try {
             URL url = new URL(targetURL);
             connection = (HttpURLConnection) url.openConnection();
@@ -32,12 +39,11 @@ public class Maim {
             StringBuilder response = new StringBuilder();
             String line;
             while ((line = rd.readLine()) != null) {
-                System.out.println(line);
                 response.append(line);
                 response.append('\r');
             }
             rd.close();
-            return response.toString();
+            return new JsonParser().parse(response.toString()).getAsJsonObject();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
