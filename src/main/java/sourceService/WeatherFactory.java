@@ -11,7 +11,7 @@ import java.util.List;
 public class WeatherFactory {
     private static final String SOURCE_1 = "weatherstack";
     private static final String SOURCE_2 = "openweathermap";
-    private static final String PATH = "/home/vitalik/new.csv";
+    private static final String PATH = System.getProperty("user.dir") + "/src/main/file/new.csv";
 
     public static SourceService defineSource(String sourceName){
         SourceService sourceService;
@@ -33,16 +33,17 @@ public class WeatherFactory {
             String[] header = { "City", "Source", "Forecast Date", "Creation Date", "Temperature F", "Temperature C" };
             writer.writeNext(header);
 
-            weathers.forEach(weather -> {
-                String[] array = {
-                        weather.getCity(), weather.getSource(), weather.getForecastDate(),
-                        weather.getCreationDate(), String.valueOf(weather.getTemperatureF()),
-                        String.valueOf(weather.getTemperatureC())
-                };
-                writer.writeNext(array);
-            });
+            weathers.forEach(weather -> writer.writeNext(createCells(weather)));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static String[] createCells(Weather weather) {
+        return new String[]{
+                weather.getCity(), weather.getSource(), weather.getForecastDate(),
+                weather.getCreationDate(), String.valueOf(weather.getTemperatureF()),
+                String.valueOf(weather.getTemperatureC())
+        };
     }
 }

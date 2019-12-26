@@ -10,6 +10,5 @@ public class Main {
         List<Weather> weather = WeatherFactory.getWeatherInNextDays(sourceService);
         WeatherFactory.writeToCSV(weather);
         System.out.println(weather);
-
     }
 }
