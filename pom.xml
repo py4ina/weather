@@ -24,7 +24,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Main</mainClass>
+                            <mainClass>start.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

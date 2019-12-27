@@ -11,9 +11,15 @@ import java.util.List;
 public class WeatherFactory {
     private static final String SOURCE_1 = "weatherstack";
     private static final String SOURCE_2 = "openweathermap";
-    private static final String PATH = System.getProperty("user.dir") + "/src/main/file/new.csv";
+    private static final String PATH = System.getProperty("user.dir") + "/src/main/resources/new.csv";
 
-    public static SourceService defineSource(String sourceName){
+    public static void getWeatherToCSVFile(String sourceName){
+        SourceService sourceService = WeatherFactory.defineSource(sourceName);
+        List<Weather> weather = sourceService.getAllCitiesWeather();
+        WeatherFactory.writeToCSV(weather);
+    }
+
+    private static SourceService defineSource(String sourceName){
         SourceService sourceService;
         switch (sourceName){
             case SOURCE_1: sourceService = new WeatherStack(); break;
@@ -23,11 +29,7 @@ public class WeatherFactory {
         return sourceService;
     }
 
-    public static List<Weather> getWeatherInNextDays(SourceService sourceService){
-        return sourceService.getAllInNextDays(3);
-    }
-
-    public static void writeToCSV(List<Weather> weathers) {
+    private static void writeToCSV(List<Weather> weathers) {
         File file = new File(PATH);
         try (CSVWriter writer = new CSVWriter(new FileWriter(file))){
             String[] header = { "City", "Source", "Forecast Date", "Creation Date", "Temperature F", "Temperature C" };

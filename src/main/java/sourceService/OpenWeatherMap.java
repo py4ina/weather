@@ -3,22 +3,38 @@ package sourceService;
 import bean.Weather;
 import com.google.gson.JsonObject;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 public class OpenWeatherMap implements SourceService {
+    private static final String SOURCE = "openweathermap";
+    private static final String URI = "http://api.openweathermap.org/data/2.5/weather?q=";
+    private static final String APIKEY = "&APPID=3f7bbf61aa43ad657a81ef7707438be4";
 
     @Override
-    public List<Weather> getAllInNextDays(int countDays) {
-        throw new UnsupportedOperationException("Метод не реалізований!");
+    public String uriMaker(String city) {
+        return URI+city+APIKEY;
     }
 
     @Override
     public Weather parseToWeatherInfo(JsonObject jsonObject) {
-        throw new UnsupportedOperationException("Метод не реалізований!");
+        JsonObject main = jsonObject.get("main").getAsJsonObject();
+        LocalDateTime localtime_epoch = LocalDateTime
+                .ofEpochSecond(jsonObject.get("dt").getAsInt(), 0, ZoneOffset.UTC);
+
+        float kelvin = main.get("temp").getAsFloat();
+        float celsius = (float) (kelvin - 273.0);
+        float fahrenheit = (float) ((9.0/5.0) * celsius + 32);
+
+        return Weather.builder()
+                .city(jsonObject.get("name").getAsString())
+                .source(SOURCE)
+                .forecastDate(localtime_epoch.toLocalDate().toString())
+                .creationDate(LocalDate.now().toString())
+                .temperatureF(fahrenheit)
+                .temperatureC(celsius)
+                .build();
     }
 
-    @Override
-    public JsonObject executeGet(String targetURL) {
-        throw new UnsupportedOperationException("Метод не реалізований!");
-    }
 }

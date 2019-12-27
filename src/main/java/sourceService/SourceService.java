@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public interface SourceService {
@@ -19,8 +20,16 @@ public interface SourceService {
     String CITY_3 = "London";
     List<String> CITIES = Arrays.asList(CITY_1, CITY_2, CITY_3);
 
-    List<Weather> getAllInNextDays(int countDays);
+    String uriMaker(String city);
     Weather parseToWeatherInfo(JsonObject jsonObject);
+
+    default List<Weather> getAllCitiesWeather() {
+        return CITIES.stream()
+                .map(this::uriMaker)
+                .map(this::executeGet)
+                .map(this::parseToWeatherInfo)
+                .collect(Collectors.toList());
+    }
 
     default JsonObject executeGet(String targetURL) {
         HttpURLConnection connection = null;
