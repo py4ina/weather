@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ public interface SourceService {
     String CITY_1 = "Moscow";
     String CITY_2 = "Kiev";
     String CITY_3 = "London";
-    List<String> CITIES = Arrays.asList(CITY_1, CITY_2, CITY_3);
+    List<String> CITIES = Collections.unmodifiableList(Arrays.asList(CITY_1, CITY_2, CITY_3));
 
     String uriMaker(String city);
     Weather parseToWeatherInfo(JsonObject jsonObject);

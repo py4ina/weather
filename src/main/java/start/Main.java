@@ -3,8 +3,8 @@ package start;
 import sourceService.WeatherFactory;
 
 public class Main {
+    /**sourceName: 'weatherstack' or 'openweathermap'**/
     public static void main(String[] args) {
-        //sourceName: 'weatherstack' or 'openweathermap'
         WeatherFactory.getWeatherToCSVFile("weatherstack");
     }
 }
