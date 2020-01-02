@@ -20,7 +20,7 @@ public class WeatherFactory {
     public static void getWeatherEveryDayToCSVFile(String sourceName){
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
         service.scheduleAtFixedRate(
-                () -> /*getWeatherOnceToCSVFile(sourceName)*/ System.out.println("111")
+                () -> getWeatherOnceToCSVFile(sourceName)
                 , 0, 1, TimeUnit.DAYS);
     }
 
