@@ -10,11 +10,11 @@ import java.time.ZoneOffset;
 public class OpenWeatherMap implements SourceService {
     private static final String SOURCE = "openweathermap";
     private static final String URI = "http://api.openweathermap.org/data/2.5/weather?q=";
-    private static final String APIKEY = "&APPID=3f7bbf61aa43ad657a81ef7707438be4";
+    private static final String API_KEY = "&APPID=3f7bbf61aa43ad657a81ef7707438be4";
 
     @Override
     public String uriMaker(String city) {
-        return URI+city+APIKEY;
+        return URI+city+ API_KEY;
     }
 
     @Override

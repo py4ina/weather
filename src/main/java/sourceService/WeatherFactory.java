@@ -7,13 +7,24 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class WeatherFactory {
     private static final String SOURCE_1 = "weatherstack";
     private static final String SOURCE_2 = "openweathermap";
     private static final String PATH = System.getProperty("user.dir") + "/src/main/resources/new.csv";
 
-    public static void getWeatherToCSVFile(String sourceName){
+    //TODO Дописати
+    public static void getWeatherEveryDayToCSVFile(String sourceName){
+        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+        service.scheduleAtFixedRate(
+                () -> /*getWeatherOnceToCSVFile(sourceName)*/ System.out.println("111")
+                , 0, 1, TimeUnit.DAYS);
+    }
+
+    private static void getWeatherOnceToCSVFile(String sourceName){
         SourceService sourceService = WeatherFactory.defineSource(sourceName);
         List<Weather> weather = sourceService.getAllCitiesWeather();
         WeatherFactory.writeToCSV(weather);
