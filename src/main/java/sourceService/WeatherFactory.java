@@ -47,6 +47,8 @@ public class WeatherFactory {
             writer.writeNext(header);
 
             weathers.forEach(weather -> writer.writeNext(createCells(weather)));
+
+            System.out.println(PATH);
         } catch (IOException e) {
             e.printStackTrace();
         }
