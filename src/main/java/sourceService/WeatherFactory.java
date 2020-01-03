@@ -16,7 +16,6 @@ public class WeatherFactory {
     private static final String SOURCE_2 = "openweathermap";
     private static final String PATH = System.getProperty("user.dir") + "/src/main/resources/new.csv";
 
-    //TODO Дописати
     public static void getWeatherEveryDayToCSVFile(String sourceName){
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
         service.scheduleAtFixedRate(
@@ -47,8 +46,6 @@ public class WeatherFactory {
             writer.writeNext(header);
 
             weathers.forEach(weather -> writer.writeNext(createCells(weather)));
-
-            System.out.println(PATH);
         } catch (IOException e) {
             e.printStackTrace();
         }
