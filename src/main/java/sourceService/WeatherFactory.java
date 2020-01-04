@@ -42,7 +42,7 @@ public class WeatherFactory {
         switch (sourceName){
             case SOURCE_1: sourceService = new WeatherStack(); break;
             case SOURCE_2: sourceService = new OpenWeatherMap(); break;
-            default: throw new UnsupportedOperationException("Некоректне ім'я ресурсу");
+            default: throw new UnsupportedOperationException("Source name is incorrect");
         }
         return sourceService;
     }
