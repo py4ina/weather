@@ -5,6 +5,6 @@ import sourceService.WeatherFactory;
 public class Main {
     /**sourceName: 'weatherstack' or 'openweathermap'**/
     public static void main(String[] args) {
-        WeatherFactory.getWeatherEveryDayToCSVFile("weatherstack");
+        WeatherFactory.getWeatherEveryDayToCSVFile("openweathermap");
     }
 }

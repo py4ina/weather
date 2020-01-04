@@ -14,7 +14,7 @@ public class OpenWeatherMap implements SourceService {
 
     @Override
     public String uriMaker(String city) {
-        return URI+city+ API_KEY;
+        return URI+city+API_KEY;
     }
 
     @Override
@@ -36,5 +36,4 @@ public class OpenWeatherMap implements SourceService {
                 .temperatureC(celsius)
                 .build();
     }
-
 }

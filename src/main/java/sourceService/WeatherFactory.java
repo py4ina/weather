@@ -6,6 +6,7 @@ import com.opencsv.CSVWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -14,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class WeatherFactory {
     private static final String SOURCE_1 = "weatherstack";
     private static final String SOURCE_2 = "openweathermap";
-    private static final String PATH = System.getProperty("user.dir") + "/src/main/resources/new.csv";
+    private static final String PATH_FOLDER = System.getProperty("user.dir") + "/src/main/resources/";
 
     public static void getWeatherEveryDayToCSVFile(String sourceName){
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
@@ -40,11 +41,11 @@ public class WeatherFactory {
     }
 
     private static void writeToCSV(List<Weather> weathers) {
-        File file = new File(PATH);
+        String fileName = "weather_"+LocalDateTime.now().toString()+".csv";
+        File file = new File(PATH_FOLDER+fileName);
         try (CSVWriter writer = new CSVWriter(new FileWriter(file))){
             String[] header = { "City", "Source", "Forecast Date", "Creation Date", "Temperature F", "Temperature C" };
             writer.writeNext(header);
-
             weathers.forEach(weather -> writer.writeNext(createCells(weather)));
         } catch (IOException e) {
             e.printStackTrace();
