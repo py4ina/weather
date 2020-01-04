@@ -17,6 +17,13 @@ public class WeatherFactory {
     private static final String SOURCE_2 = "openweathermap";
     private static final String PATH_FOLDER = System.getProperty("user.dir") + "/src/main/resources/";
 
+    private static final String CITY = "City";
+    private static final String SOURCE = "Source";
+    private static final String FORECAST_DATE = "Forecast Date";
+    private static final String CREATION_DATE = "Creation Date";
+    private static final String TEMPERATURE_F = "Temperature F";
+    private static final String TEMPERATURE_C = "Temperature C";
+
     public static void getWeatherEveryDayToCSVFile(String sourceName){
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
         service.scheduleAtFixedRate(
@@ -43,8 +50,9 @@ public class WeatherFactory {
     private static void writeToCSV(List<Weather> weathers) {
         String fileName = "weather_"+LocalDateTime.now().toString()+".csv";
         File file = new File(PATH_FOLDER+fileName);
+
         try (CSVWriter writer = new CSVWriter(new FileWriter(file))){
-            String[] header = { "City", "Source", "Forecast Date", "Creation Date", "Temperature F", "Temperature C" };
+            String[] header = {CITY, SOURCE, FORECAST_DATE, CREATION_DATE, TEMPERATURE_F, TEMPERATURE_C};
             writer.writeNext(header);
             weathers.forEach(weather -> writer.writeNext(createCells(weather)));
         } catch (IOException e) {
