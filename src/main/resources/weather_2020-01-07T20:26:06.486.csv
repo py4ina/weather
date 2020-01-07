@@ -1,0 +1,4 @@
+"City","Source","Forecast Date","Creation Date","Temperature F","Temperature C"
+"Moscow","openweathermap","2020-01-07","2020-01-07","30.992004","-0.55999756"
+"Kyiv","openweathermap","2020-01-07","2020-01-07","25.988007","-3.3399963"
+"London","openweathermap","2020-01-07","2020-01-07","53.276012","11.820007"
