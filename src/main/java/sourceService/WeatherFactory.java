@@ -55,6 +55,8 @@ public class WeatherFactory {
             String[] header = {CITY, SOURCE, FORECAST_DATE, CREATION_DATE, TEMPERATURE_F, TEMPERATURE_C};
             writer.writeNext(header);
             weathers.forEach(weather -> writer.writeNext(createCells(weather)));
+
+            System.out.println("file: '"+file+"' is created!");
         } catch (IOException e) {
             e.printStackTrace();
         }
